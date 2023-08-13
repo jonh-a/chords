@@ -1,0 +1,49 @@
+.piano-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.piano {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.piano-key {
+  width: 40px;
+  height: 150px;
+  background-color: #fff;
+  border: 1px solid #000;
+  margin-right: -1px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  
+  z-index: 1;
+}
+
+.black-key {
+  background-color: #000;
+  color: #fff;
+  z-index: 2;
+  width: 24px;
+  height: 100px;
+  margin-bottom: 70px; /* Adjusted margin */
+  margin-right: -10px; /* Overlap adjustment */
+  margin-left: -20px;
+  border: none;
+  font-size: 10px;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+.highlighted {
+  background-color: #ffcc00;
+}
