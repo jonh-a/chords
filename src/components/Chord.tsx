@@ -15,17 +15,12 @@ const Chord: React.FC<Props> = ({
       'A3', 'A#3', 'B3', 'C3', 'C#3', 'D3', 'D#3', 'E3', 'F3', 'F#3', 'G3', 'G#3',
     ]
 
-    if (chordName.startsWith("Bb")) chordName = chordName.replace('Bb', 'A#')
-    if (chordName.startsWith("Db")) chordName = chordName.replace('Db', 'C#')
-    if (chordName.startsWith("Eb")) chordName = chordName.replace('Eb', 'D#')
-    if (chordName.startsWith("Gb")) chordName = chordName.replace('Gb', 'F#')
-    if (chordName.startsWith("Ab")) chordName = chordName.replace('Ab', 'G#')
-
     const chordStructures: { [index: string]: number[] } = {
       'maj': [0, 4, 7],
       '': [0, 4, 7],
       'min': [0, 3, 7],
       'm': [0, 3, 7],
+      '5': [0, 7],
       '7': [0, 4, 7, 10],
       'sus2': [0, 2, 7],
       'sus4': [0, 5, 7],
@@ -41,8 +36,18 @@ const Chord: React.FC<Props> = ({
       'dim7': [0, 3, 6, 9],
     }
 
-    const rootNote = chordName.split(" ")?.[0]
-    const chordType = chordName.split(" ")?.[1]
+    if (chordName.startsWith("Bb")) chordName = chordName.replace('Bb', 'A#')
+    if (chordName.startsWith("Db")) chordName = chordName.replace('Db', 'C#')
+    if (chordName.startsWith("Eb")) chordName = chordName.replace('Eb', 'D#')
+    if (chordName.startsWith("Gb")) chordName = chordName.replace('Gb', 'F#')
+    if (chordName.startsWith("Ab")) chordName = chordName.replace('Ab', 'G#')
+
+    let splitIdx = 0;
+    if (chordName.includes(' ')) splitIdx = chordName.indexOf(' ');
+    if (chordName?.[1] === '#' || chordName?.[1] === 'b') splitIdx = 1;
+
+    const rootNote = chordName.substring(0, splitIdx + 1);
+    const chordType = chordName.substring(splitIdx + 1)
 
     if (!Object.keys(chordStructures).includes(chordType)) {
       return []
