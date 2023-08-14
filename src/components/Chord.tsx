@@ -66,6 +66,11 @@ const Chord: React.FC<Props> = ({
     if (chordName.startsWith("Gb")) chordName = chordName.replace('Gb', 'F#');
     if (chordName.startsWith("Ab")) chordName = chordName.replace('Ab', 'G#');
 
+    /* 
+      Split the chord into root note and chord type either at a space 
+      or immediately after the flat/sharp notation.
+      Otherwise just split after first character.
+    */
     let splitIdx = 0;
     if (chordName.includes(' ')) splitIdx = chordName.indexOf(' ');
     if (chordName?.[1] === '#' || chordName?.[1] === 'b') splitIdx = 1;
@@ -73,13 +78,17 @@ const Chord: React.FC<Props> = ({
     const rootNote = chordName.substring(0, splitIdx + 1)?.trim();
     const chordType = chordName.substring(splitIdx + 1)?.trim();
 
-    if (!Object.keys(chordStructures).includes(chordType)) {
-      return [];
-    }
+    /* If no chord type found, return */
+    if (!Object.keys(chordStructures).includes(chordType)) return [];
 
     const rootNoteIdx: number = notes?.indexOf(rootNote);
     const chordNotes: string[] = [];
 
+    /* 
+      If a bass note is added and the first instance of the bass note
+      is after the first instance of the root note, then shift the chord
+      diagram up 12 half-steps.
+    */
     let addIdx = 0;
     if (
       notes.indexOf(bassNote) > -1
