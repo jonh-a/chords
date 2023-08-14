@@ -1,39 +1,91 @@
 import React from 'react';
-import './Piano.css';
 import { notes as allNotes } from '../util'
+import styled from 'styled-components'
+import PianoKey from './PianoKey';
+import Box from '@mui/material/Box'
 
-interface PianoKeyProps {
-  note: string;
-  isHighlighted: boolean;
-  isBlackKey: boolean;
-}
+const PianoWrapper = styled(Box)`
+  display: flexbox;
+  justify-content: center;
+  align-content: center;
 
-const PianoKey: React.FC<PianoKeyProps> = ({ note, isHighlighted, isBlackKey }) => (
-  <div className={`piano-key ${isHighlighted ? 'highlighted' : ''} ${isBlackKey ? 'black-key' : ''}`}>
-    {(note?.endsWith('2') || note?.endsWith('3') || note?.endsWith('4'))
-      ? note.substring(0, note.length - 1)
-      : note
+  .piano-container {
+    text-align: center;
+    padding: 20px;
+    width: 90%;
+  }
+
+  .piano {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .piano-key {
+    width: 40px;
+    height: 150px;
+    background-color: #fff;
+    border: 1px solid #000;
+    margin-right: -1px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+  }
+
+  .black-key {
+    background-color: #000;
+    color: #fff;
+    z-index: 2;
+    width: 24px;
+    height: 100px;
+    margin-bottom: 70px; /* Adjusted margin */
+    margin-right:-10px; /* Overlap adjustment */
+    margin-left: -15px;
+    border: none;
+    font-size: 10px;
+    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .piano-key,
+    .black-key {
+      font-size: 0;
     }
-  </div>
-);
+  }
+
+  .highlighted {
+    background-color: #ffcc00;
+  }
+`
 
 interface Props {
   notes: string[];
 }
 
 const Piano: React.FC<Props> = ({ notes }) => (
-  <div className="piano-container">
-    <div className="piano">
-      {allNotes.map((note) => (
-        <PianoKey
-          key={note}
-          note={note}
-          isHighlighted={notes.includes(note)}
-          isBlackKey={note.includes('#')}
-        />
-      ))}
+  <PianoWrapper>
+    <div className="piano-container">
+      <div className="piano">
+        {allNotes.map((note) => (
+          <PianoKey
+            key={note}
+            note={note}
+            isHighlighted={notes.includes(note)}
+            isBlackKey={note.includes('#')}
+          />
+        ))}
+      </div>
     </div>
-  </div >
+  </PianoWrapper>
 );
 
 export default Piano;
