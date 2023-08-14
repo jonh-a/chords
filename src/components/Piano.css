@@ -43,6 +43,13 @@
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .piano-key,
+  .black-key {
+    font-size: 0;
+  }
+}
+
 .highlighted {
   background-color: #ffcc00;
 }

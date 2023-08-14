@@ -1,13 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Piano from './Piano'
+import NoPiano from './NoPiano'
+import Box from '@mui/material/Box'
+import styled from 'styled-components'
+
+const Container = styled(Box)`
+  display: flexbox;
+  justify-content: center;
+  align-items: flex-start;
+  height: 15em;
+  width: 90%;
+`
 
 interface Props {
   chord: string
+  mobile: boolean
 }
 
 const Chord: React.FC<Props> = ({
   chord,
+  mobile,
 }) => {
+
+  const swapFlatsWithSharps = (str: string) => {
+    if (str?.startsWith("Bb")) return str.replace('Bb', 'A#');
+    if (str?.startsWith("Db")) return str.replace('Db', 'C#');
+    if (str?.startsWith("Eb")) return str.replace('Eb', 'D#');
+    if (str?.startsWith("Gb")) return str.replace('Gb', 'F#');
+    if (str?.startsWith("Ab")) return str.replace('Ab', 'G#');
+    return str
+  }
+
   const getChordNotes = (chordName: string): string[] => {
     const notes = [
       'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
@@ -55,16 +78,15 @@ const Chord: React.FC<Props> = ({
     };
 
     chordName = chordName?.trim();
-    const bassNote = chordName?.split('/')?.[1];
+    let bassNote = chordName?.split('/')?.[1];
     if (bassNote) chordName = chordName?.split('/')?.[0];
 
     if (!chordName || chordName === '') return [];
 
-    if (chordName.startsWith("Bb")) chordName = chordName.replace('Bb', 'A#');
-    if (chordName.startsWith("Db")) chordName = chordName.replace('Db', 'C#');
-    if (chordName.startsWith("Eb")) chordName = chordName.replace('Eb', 'D#');
-    if (chordName.startsWith("Gb")) chordName = chordName.replace('Gb', 'F#');
-    if (chordName.startsWith("Ab")) chordName = chordName.replace('Ab', 'G#');
+    chordName = swapFlatsWithSharps(chordName)
+    if (bassNote) bassNote = swapFlatsWithSharps(bassNote)
+
+    console.log({ chordName, bassNote })
 
     /* 
       Split the chord into root note and chord type either at a space 
@@ -108,9 +130,14 @@ const Chord: React.FC<Props> = ({
   }
 
   return (
-    <div>
-      <Piano notes={getChordNotes(chord)} />
-    </div>
+    <Container>
+      {
+        mobile
+          ? <NoPiano notes={getChordNotes(chord)} />
+          : <Piano notes={getChordNotes(chord)} />
+      }
+
+    </Container>
   )
 }
 
