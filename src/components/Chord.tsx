@@ -8,8 +8,8 @@ const Container = styled(Box)`
   display: flexbox;
   justify-content: center;
   align-items: flex-start;
-  height: 15em;
-  width: 90%;
+  height: 70vh;
+  width: 100%;
 `
 
 interface Props {
@@ -101,8 +101,6 @@ const Chord: React.FC<Props> = ({
 
     chordName = swapFlatsWithSharps(chordName)
     if (bassNote) bassNote = swapFlatsWithSharps(bassNote)
-
-    console.log({ chordName, bassNote })
 
     /* 
       Split the chord into root note and chord type either at a space 

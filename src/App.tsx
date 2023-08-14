@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Form from './components/Form';
 import styled from 'styled-components';
 import Paper from '@mui/material/Paper'
 import Chord from './components/Chord';
-import Sorry from './components/Sorry';
 
 const Wrapper = styled(Paper)`
-  display: flex;
+  display: flexbox;
   height: 100vh;
   justify-content: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   margin-left: .5em;
   margin-right: .5em;

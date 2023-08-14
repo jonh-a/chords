@@ -9,6 +9,7 @@ const Container = styled(Box)`
   display: flexbox;
   justify-content: center;
   align-items: center;
+  height: 20vh;
 `
 
 interface Props {
@@ -35,4 +36,4 @@ const Form: React.FC<Props> = ({
   )
 }
 
-export default Form
+export default Form;
