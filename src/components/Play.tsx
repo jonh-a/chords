@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as Tone from 'tone';
 import Box from '@mui/material/Box'
 import styled from 'styled-components'
@@ -16,16 +16,21 @@ const Container = styled(Box)`
   flex-wrap: wrap;
   height: 70vh;
   width: 100%;
+
+  @media (max-width: 768px) {
+    margin-top: 5em;
+  }
 `
 
 const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
-  const synth = new Tone.PolySynth(Tone.AMSynth).toDestination();
-  synth.set({
+  const [playing, setPlaying] = useState<boolean>(false);
+
+  const synth = new Tone.PolySynth(Tone.AMSynth, {
     harmonicity: 1,
     oscillator: {
-      type: 'triangle20'
+      type: 'triangle10'
     }
-  })
+  }).toDestination();
 
   const increaseNotesOctives = (notes: string[]): string[] => {
     return notes.map((note: string, index: number) => {
@@ -39,20 +44,23 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
 
       else {
         const curOctive = Number(note.slice(-1));
-        const newOctive = curOctive + (isSlashChord ? 2 : 3);
+        const newOctive = curOctive + (isSlashChord ? 2 : 2);
         return `${note.substring(0, note.length - 1)}${newOctive}`
       }
     })
   }
 
+  const frequencies = increaseNotesOctives(notes).map(note => Tone.Frequency(note).toFrequency());
+
   const playNote = () => {
-    const frequencies = increaseNotesOctives(notes).map(note => Tone.Frequency(note).toFrequency());
     synth.triggerAttackRelease(frequencies, '2');
+    setPlaying(true);
+    setTimeout(() => setPlaying(false), 2000)
   }
 
   return (
     <Container>
-      <Button onClick={playNote}>Play Chord</Button>
+      <Button onClick={playNote} disabled={playing}>Play</Button>
     </Container>
   )
 }
