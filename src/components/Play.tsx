@@ -38,14 +38,14 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
         return `${note}2`
       }
 
-      if (note.endsWith('#') || note.endsWith("b") || note.length === 1) {
+      if (note?.endsWith('#') || note?.endsWith("b") || note?.length === 1) {
         return `${note}3`
       }
 
       else {
-        const curOctive = Number(note.slice(-1));
+        const curOctive = Number(note?.slice(-1));
         const newOctive = curOctive + (isSlashChord ? 2 : 2);
-        return `${note.substring(0, note.length - 1)}${newOctive}`
+        return `${note?.substring(0, note.length - 1)}${newOctive}`
       }
     })
   }

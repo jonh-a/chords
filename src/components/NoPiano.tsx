@@ -29,8 +29,8 @@ const NoPiano: React.FC<Props> = ({
         >
           {notes
             ?.map((note: string) => {
-              if (note.endsWith('2') || note.endsWith('3') || note.endsWith('4')) {
-                return note.substring(0, note.length - 1)
+              if (note?.endsWith('2') || note?.endsWith('3') || note?.endsWith('4')) {
+                return note?.substring(0, note.length - 1)
               }
               return note;
             })

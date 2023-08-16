@@ -26,7 +26,9 @@ const Form: React.FC<Props> = ({
       <FormControl sx={{ m: 0 }}>
         <TextField
           id='chord'
-          label='Chord Name'
+          variant='standard'
+          placeholder='Cmaj7/G'
+          inputProps={{ style: { textAlign: 'center' } }}
           value={chord}
           defaultValue=''
           onChange={(e: any) => setChord(e?.target?.value || '')}

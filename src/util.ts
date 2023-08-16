@@ -87,8 +87,8 @@ export const getChordNotes = (chordName: string): string[] => {
   if (chordName.includes(' ')) splitIdx = chordName.indexOf(' ');
   if (chordName?.[1] === '#' || chordName?.[1] === 'b') splitIdx = 1;
 
-  const rootNote = chordName.substring(0, splitIdx + 1)?.trim();
-  const chordType = chordName.substring(splitIdx + 1)?.trim();
+  const rootNote = chordName?.substring(0, splitIdx + 1)?.trim();
+  const chordType = chordName?.substring(splitIdx + 1)?.trim();
 
   /* If no chord type found, return */
   if (!Object.keys(chordStructures).includes(chordType)) return [];
