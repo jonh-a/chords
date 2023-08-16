@@ -4,9 +4,9 @@ import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import styled from 'styled-components'
 
-const Container = styled(Box)`
+const Wrapper = styled(Box)`
   width: 100%;
-  display: flexbox;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 20vh;
@@ -22,7 +22,7 @@ const Form: React.FC<Props> = ({
   setChord,
 }) => {
   return (
-    <Container>
+    <Wrapper>
       <FormControl sx={{ m: 0 }}>
         <TextField
           id='chord'
@@ -32,7 +32,7 @@ const Form: React.FC<Props> = ({
           onChange={(e: any) => setChord(e?.target?.value || '')}
         />
       </FormControl>
-    </Container>
+    </Wrapper>
   )
 }
 

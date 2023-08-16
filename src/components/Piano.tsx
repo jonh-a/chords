@@ -5,7 +5,7 @@ import PianoKey from './PianoKey';
 import Box from '@mui/material/Box'
 
 const PianoWrapper = styled(Box)`
-  display: flexbox;
+  display: flex;
   justify-content: center;
   align-content: center;
 

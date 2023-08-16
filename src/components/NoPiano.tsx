@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-const Container = styled(Box)`
+const Wrapper = styled(Box)`
   text-align: center;
-  display: flexbox;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -20,8 +20,8 @@ const NoPiano: React.FC<Props> = ({
   notes
 }) => {
   return (
-    <Container sx={{ height: '50vh' }}>
-      <Container sx={{ height: '5vh' }}>
+    <Wrapper>
+      <Box sx={{ width: '100%', textAlign: 'center' }}>
         <Typography
           variant="h4"
           component="h4"
@@ -36,17 +36,17 @@ const NoPiano: React.FC<Props> = ({
             })
             ?.join(" ")}
         </Typography>
-      </Container>
+      </Box>
 
-      <Container sx={{ height: '10vh' }}>
+      <Box sx={{ width: '100%', textAlign: 'center' }}>
         <Typography
           variant="subtitle1"
           width="100%"
         >
           Switch to landscape mode to see the piano thing.
         </Typography>
-      </Container>
-    </Container>
+      </Box>
+    </Wrapper>
   )
 }
 

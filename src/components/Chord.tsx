@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { getChordNotes } from '../util'
 
 const Container = styled(Box)`
-  display: flexbox;
+  display: flex;
   justify-content: center;
   align-items: flex-start;
   height: 70vh;
@@ -28,7 +28,6 @@ const Chord: React.FC<Props> = ({
         ? <NoPiano notes={getChordNotes(chord)} />
         : <Piano notes={getChordNotes(chord)} />
     }
-
   </Container>
 );
 

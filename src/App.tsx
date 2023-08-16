@@ -3,9 +3,10 @@ import Form from './components/Form';
 import styled from 'styled-components';
 import Paper from '@mui/material/Paper'
 import Chord from './components/Chord';
+import Container from '@mui/material/Container'
 
 const Wrapper = styled(Paper)`
-  display: flexbox;
+  display: flex;
   height: 100vh;
   justify-content: center;
   align-items: flex-start;
@@ -28,7 +29,7 @@ const App = () => {
   }, []);
 
   return (
-    <Wrapper>
+    <Container>
       <Form
         chord={chord}
         setChord={setChord}
@@ -37,7 +38,7 @@ const App = () => {
         chord={chord}
         mobile={isMobile}
       />
-    </Wrapper>
+    </Container>
   )
 }
 
