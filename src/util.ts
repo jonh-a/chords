@@ -107,14 +107,18 @@ export const getChordNotes = (chordName: string): string[] => {
     && notes.indexOf(bassNote) > rootNoteIdx
   ) addIdx = 12;
 
+  if (bassNote && notes.indexOf(bassNote) > -1) {
+    chordNotes.push(bassNote);
+  }
+
   const chordStructure = chordStructures[chordType];
   chordStructure?.forEach((n: number) => {
     chordNotes.push(notes[rootNoteIdx + n + addIdx])
   });
 
-  if (bassNote && notes.indexOf(bassNote) > -1) {
-    chordNotes.push(bassNote);
-  }
-
   return chordNotes;
+}
+
+export const isSlashChord = (chord: string): boolean => {
+  return (!chord?.endsWith('9') && chord?.includes('/'));
 }
