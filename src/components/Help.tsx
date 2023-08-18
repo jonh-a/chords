@@ -25,6 +25,7 @@ const Help: React.FC<Props> = ({
     boxShadow: 24,
     p: 4,
     maxHeight: '50%',
+    overflow: 'scroll',
   };
 
   return (
