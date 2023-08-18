@@ -5,10 +5,10 @@ import Container from '@mui/material/Container'
 
 const App = () => {
   const [chord, setChord] = useState<string>('Cmaj7/G');
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 650);
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 650);
     }
 
     window.addEventListener('resize', handleResize);

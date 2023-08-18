@@ -60,6 +60,25 @@ const PianoWrapper = styled(Box)`
     .black-key {
       font-size: 0;
     }
+    .piano-container {
+      padding: 10px;
+    }
+  }
+
+  @media (max-height: 390px) {
+    .piano-key {
+      width: 30px;
+      height: 100px;
+      font-size: 0;
+    }
+    .black-key {
+      width: 25px;
+      height: 70px;
+      font-size: 0;
+    }
+    .piano-container {
+      padding: 0px;
+    }
   }
 
   .highlighted {
