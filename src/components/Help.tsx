@@ -24,6 +24,7 @@ const Help: React.FC<Props> = ({
     border: '1px solid #000',
     boxShadow: 24,
     p: 4,
+    maxHeight: '50%',
   };
 
   return (
