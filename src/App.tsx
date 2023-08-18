@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import Form from './components/Form';
 import Chord from './components/Chord';
 import Container from '@mui/material/Container'
+import Help from './components/Help';
 
 const App = () => {
   const [chord, setChord] = useState<string>('Cmaj7/G');
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 650);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 650);
@@ -21,10 +24,15 @@ const App = () => {
       <Form
         chord={chord}
         setChord={setChord}
+        setModalOpen={setModalOpen}
       />
       <Chord
         chord={chord}
         mobile={isMobile}
+      />
+      <Help
+        open={modalOpen}
+        setOpen={setModalOpen}
       />
     </Container>
   )

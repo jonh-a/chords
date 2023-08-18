@@ -1,8 +1,6 @@
-import React from 'react'
-import FormControl from '@mui/material/FormControl'
-import TextField from '@mui/material/TextField'
-import Box from '@mui/material/Box'
-import styled from 'styled-components'
+import React from 'react';
+import styled from '@emotion/styled';
+import { Box, FormControl, TextField, Button } from '@mui/material';
 
 const Wrapper = styled(Box)`
   width: 100%;
@@ -10,20 +8,33 @@ const Wrapper = styled(Box)`
   justify-content: center;
   align-items: center;
   height: 20vh;
-`
+  position: relative;
+`;
+
+const TextFieldWrapper = styled(FormControl)`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const ButtonWrapper = styled(FormControl)`
+  position: absolute;
+  left: calc(50% + 6em);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+`;
 
 interface Props {
-  chord: string
-  setChord: (chord: string) => void
+  chord: string;
+  setChord: (chord: string) => void;
+  setModalOpen: (open: boolean) => void;
 }
 
-const Form: React.FC<Props> = ({
-  chord,
-  setChord,
-}) => {
+const Form: React.FC<Props> = ({ chord, setChord, setModalOpen }) => {
   return (
     <Wrapper>
-      <FormControl sx={{ m: 0 }}>
+      <TextFieldWrapper>
         <TextField
           id='chord'
           variant='standard'
@@ -33,9 +44,12 @@ const Form: React.FC<Props> = ({
           defaultValue=''
           onChange={(e: any) => setChord(e?.target?.value || '')}
         />
-      </FormControl>
+      </TextFieldWrapper>
+      <ButtonWrapper>
+        <p onClick={() => setModalOpen(true)}>?</p>
+      </ButtonWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Form;
