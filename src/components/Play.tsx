@@ -50,9 +50,8 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
     })
   }
 
-  const frequencies = increaseNotesOctives(notes).map(note => Tone.Frequency(note).toFrequency());
-
   const playNote = () => {
+    const frequencies = increaseNotesOctives(notes).map(note => Tone.Frequency(note).toFrequency());
     synth.triggerAttackRelease(frequencies, '2');
     setPlaying(true);
     setTimeout(() => setPlaying(false), 2000)

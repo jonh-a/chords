@@ -32,7 +32,6 @@ const PianoWrapper = styled(Box)`
     align-items: flex-end;
     font-size: 12px;
     font-weight: bold;
-    cursor: pointer;
     position: relative;
     z-index: 1;
   }
@@ -43,8 +42,8 @@ const PianoWrapper = styled(Box)`
     z-index: 2;
     width: 24px;
     height: 100px;
-    margin-bottom: 70px; /* Adjusted margin */
-    margin-right:-10px; /* Overlap adjustment */
+    margin-bottom: 70px;
+    margin-right:-10px;
     margin-left: -15px;
     border: none;
     font-size: 10px;
@@ -52,7 +51,6 @@ const PianoWrapper = styled(Box)`
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    cursor: pointer;
   }
 
   @media (max-width: 768px) {

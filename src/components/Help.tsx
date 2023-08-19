@@ -39,6 +39,7 @@ const Help: React.FC<Props> = ({
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Chord Visualizer
         </Typography>
+
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           Enter the name of a chord to visualize it.
 
