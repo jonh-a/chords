@@ -85,10 +85,20 @@ const PianoWrapper = styled(Box)`
 `
 
 interface Props {
-  notes: string[];
+  notes: string[]
+  selectedNotes: string[]
+  setSelectedNotes: React.Dispatch<React.SetStateAction<string[]>>;
+  setSearchBy: (searchBy: string) => void
+  searchBy: string
 }
 
-const Piano: React.FC<Props> = ({ notes }) => (
+const Piano: React.FC<Props> = ({
+  notes,
+  selectedNotes,
+  setSelectedNotes,
+  setSearchBy,
+  searchBy,
+}) => (
   <PianoWrapper>
     <div className="piano-container">
       <div className="piano">
@@ -98,6 +108,10 @@ const Piano: React.FC<Props> = ({ notes }) => (
             note={note}
             isHighlighted={notes.includes(note)}
             isBlackKey={note.includes('#')}
+            selectedNotes={selectedNotes}
+            setSelectedNotes={setSelectedNotes}
+            setSearchBy={setSearchBy}
+            searchBy={searchBy}
           />
         ))}
       </div>

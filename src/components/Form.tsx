@@ -26,12 +26,20 @@ const ButtonWrapper = styled(FormControl)`
 `;
 
 interface Props {
-  chord: string;
-  setChord: (chord: string) => void;
-  setModalOpen: (open: boolean) => void;
+  chord: string
+  setChord: (chord: string) => void
+  setModalOpen: (open: boolean) => void
+  searchBy: string
+  setSearchBy: (searchBy: string) => void
 }
 
-const Form: React.FC<Props> = ({ chord, setChord, setModalOpen }) => {
+const Form: React.FC<Props> = ({
+  chord,
+  setChord,
+  setModalOpen,
+  searchBy,
+  setSearchBy,
+}) => {
   return (
     <Wrapper>
       <TextFieldWrapper>
@@ -40,9 +48,8 @@ const Form: React.FC<Props> = ({ chord, setChord, setModalOpen }) => {
           variant='standard'
           placeholder='Cmaj7/G'
           inputProps={{ style: { textAlign: 'center' } }}
-          value={chord}
-          defaultValue=''
-          onChange={(e: any) => setChord(e?.target?.value || '')}
+          value={searchBy === "name" ? chord : chord}
+          onChange={(e: any) => { setChord(e?.target?.value || ''); setSearchBy('name') }}
         />
       </TextFieldWrapper>
       <ButtonWrapper>

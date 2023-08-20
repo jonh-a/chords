@@ -122,3 +122,34 @@ export const getChordNotes = (chordName: string): string[] => {
 export const isSlashChord = (chord: string): boolean => {
   return (!chord?.endsWith('9') && chord?.includes('/'));
 }
+
+const findKeyWithLongestArray = (obj: { [index: string]: number[] }) => {
+  let longestKey = '';
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (!longestKey || obj[key].length > obj[longestKey].length) {
+        longestKey = key;
+      }
+    }
+  }
+
+  return longestKey;
+}
+
+export const guessChordByNotes = (selectedNotes: string[]): string => {
+  const rootIdx = notes.findIndex((j: string) => j === selectedNotes?.[0])
+
+  const guesses: { [index: string]: number[] } = {}
+  Object.keys(chordStructures).forEach((structure: string) => {
+    const indexes = selectedNotes
+      ?.map((i: string) => notes.findIndex((j: string) => i === j))
+      ?.filter((i: number) => i > -1)
+      ?.map((i: number) => i - rootIdx);
+    if (chordStructures[structure].every((item: number) => indexes.includes(item))) {
+      guesses[`${selectedNotes?.[0]}${structure}`] = chordStructures[structure]
+    }
+  })
+
+  return findKeyWithLongestArray(guesses) || ''
+}

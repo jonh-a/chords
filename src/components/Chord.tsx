@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Piano from './Piano'
 import NoPiano from './NoPiano'
 import Box from '@mui/material/Box'
 import styled from 'styled-components'
-import { getChordNotes, isSlashChord } from '../util'
+import { getChordNotes, isSlashChord, guessChordByNotes } from '../util'
 import Play from './Play'
 
 const Container = styled(Box)`
@@ -18,21 +18,47 @@ const Container = styled(Box)`
 interface Props {
   chord: string
   mobile: boolean
+  searchBy: string
+  setSearchBy: (searchBy: string) => void
+  setChord: (chord: string) => void
 }
 
 const Chord: React.FC<Props> = ({
   chord,
   mobile,
+  searchBy,
+  setSearchBy,
+  setChord,
 }) => {
   const notes = getChordNotes(chord)
+  const [selectedNotes, setSelectedNotes] = useState<string[]>([])
+
+  useEffect(() => {
+    if (searchBy === 'notes') {
+      console.log(guessChordByNotes(selectedNotes))
+      setChord(guessChordByNotes(selectedNotes))
+    }
+  }, [searchBy, setChord, selectedNotes])
+
   return (
     <Container>
       {
         mobile
-          ? <NoPiano notes={notes} />
-          : <Piano notes={notes} />
+          ? <NoPiano
+            notes={searchBy === 'name' ? notes : selectedNotes}
+          />
+          : <Piano
+            notes={notes}
+            selectedNotes={selectedNotes}
+            setSelectedNotes={setSelectedNotes}
+            setSearchBy={setSearchBy}
+            searchBy={searchBy}
+          />
       }
-      <Play notes={notes} isSlashChord={isSlashChord(chord)} />
+      <Play
+        notes={searchBy === 'name' ? notes : selectedNotes}
+        isSlashChord={isSlashChord(chord)}
+      />
     </Container>
   )
 }

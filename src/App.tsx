@@ -8,6 +8,7 @@ const App = () => {
   const [chord, setChord] = useState<string>('Cmaj7/G');
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 650);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [searchBy, setSearchBy] = useState<string>("name")
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,10 +26,15 @@ const App = () => {
         chord={chord}
         setChord={setChord}
         setModalOpen={setModalOpen}
+        searchBy={searchBy}
+        setSearchBy={setSearchBy}
       />
       <Chord
         chord={chord}
+        setChord={setChord}
         mobile={isMobile}
+        searchBy={searchBy}
+        setSearchBy={setSearchBy}
       />
       <Help
         open={modalOpen}
