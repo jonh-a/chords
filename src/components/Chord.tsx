@@ -35,7 +35,6 @@ const Chord: React.FC<Props> = ({
 
   useEffect(() => {
     if (searchBy === 'notes') {
-      console.log(guessChordByNotes(selectedNotes))
       setChord(guessChordByNotes(selectedNotes))
     }
   }, [searchBy, setChord, selectedNotes])

@@ -7,6 +7,7 @@ export const notes = [
 export const chordStructures: { [index: string]: number[] } = {
   // triads
   'maj': [0, 4, 7],
+  '(b5)': [0, 4, 6],
   '': [0, 4, 7],
   'min': [0, 3, 7],
   'm': [0, 3, 7],
@@ -30,7 +31,9 @@ export const chordStructures: { [index: string]: number[] } = {
   'min7b5': [0, 3, 6, 10],
   'dim7': [0, 3, 6, 9],
   'add9': [0, 4, 7, 14],
+  'addb9': [0, 4, 7, 13],
   '(add9)': [0, 4, 7, 14],
+  '(addb9)': [0, 4, 7, 13],
   'madd9': [0, 3, 7, 14],
   'm(add9)': [0, 3, 7, 14],
   'mmaj7': [0, 3, 7, 11],
