@@ -50,7 +50,11 @@ const Help: React.FC<Props> = ({
 
           <br />
 
-          {Object.keys(chordStructures)?.join(" / ")}
+          {
+            Object.keys(chordStructures)
+              ?.filter((i: string) => i.length > 0)
+              ?.join(" / ")
+          }
         </Typography>
       </Box>
 

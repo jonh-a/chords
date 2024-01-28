@@ -31,7 +31,6 @@ const PianoKey: React.FC<Props> = ({
     ? `piano-key ${isHighlighted ? 'highlighted' : ''} ${isBlackKey ? 'black-key' : ''}`
     : `piano-key ${selectedNotes?.includes(note) ? 'highlighted' : ''} ${isBlackKey ? 'black-key' : ''}`
 
-
   return (
     <div
       className={className}
