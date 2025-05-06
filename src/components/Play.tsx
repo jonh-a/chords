@@ -80,12 +80,12 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
   const increaseNotesOctives = (notes: string[]): string[] => {
     return notes.map((note: string) => {
       if (!note.endsWith("1") && !note.endsWith("2") && !note.endsWith("3")) {
-        return `${note}2`
+        return `${note}1`
       }
-      if (note.endsWith("1")) return `${note.substring(0, note.length - 1)}3`
-      if (note.endsWith("2")) return `${note.substring(0, note.length - 1)}4`
-      if (note.endsWith("3")) return `${note.substring(0, note.length - 1)}5`
-      return `${note}4`
+      if (note.endsWith("1")) return `${note.substring(0, note.length - 1)}2`
+      if (note.endsWith("2")) return `${note.substring(0, note.length - 1)}3`
+      if (note.endsWith("3")) return `${note.substring(0, note.length - 1)}4`
+      return `${note}5`
     })
   }
 
