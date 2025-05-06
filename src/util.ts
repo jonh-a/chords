@@ -13,11 +13,12 @@ export const addNumbersToNotes = (rawNotes: string[]): string[] => {
 
   let currentIndex = 0;
   const result: string[] = [];
+  const increaseOctave = baseNotes.indexOf(rawNotes[0]) < 6;
 
   for (let note of rawNotes) {
     while (currentIndex < notes.length) {
       if (baseNotes[currentIndex] === note) {
-        result.push(notes[currentIndex]);
+        result.push(notes[increaseOctave ? currentIndex + 12 : currentIndex]);
         currentIndex++;
         break;
       }
