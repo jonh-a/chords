@@ -3,7 +3,6 @@ import * as Tone from 'tone';
 import Box from '@mui/material/Box'
 import styled from 'styled-components'
 import Button from '@mui/material/Button'
-import { notes } from '../util';
 
 interface Props {
   notes: string[]
@@ -79,21 +78,14 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
   }, []);
 
   const increaseNotesOctives = (notes: string[]): string[] => {
-    return notes.map((note: string, index: number) => {
-      if (index === 0 && isSlashChord) {
+    return notes.map((note: string) => {
+      if (!note.endsWith("1") && !note.endsWith("2") && !note.endsWith("3")) {
         return `${note}2`
       }
-
-      if (note?.endsWith('#') || note?.endsWith("b") || note?.length === 1) {
-        return `${note}3`
-      }
-
-      else {
-        const curOctive = Number(note?.slice(-1));
-        const newOctive = curOctive + (isSlashChord ? 2 : 2);
-        const safeOctave = Math.min(Math.max(newOctive, 0), 8);
-        return `${note?.substring(0, note.length - 1)}${safeOctave}`
-      }
+      if (note.endsWith("1")) return `${note.substring(0, note.length - 1)}3`
+      if (note.endsWith("2")) return `${note.substring(0, note.length - 1)}4`
+      if (note.endsWith("3")) return `${note.substring(0, note.length - 1)}5`
+      return `${note}4`
     })
   }
 
@@ -105,6 +97,7 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
 
     try {
       const frequencies = increaseNotesOctives(notes);
+      console.log('Playing notes:', frequencies)
       sampler.triggerAttackRelease(frequencies, '2');
       setPlaying(true);
       setError(null);
