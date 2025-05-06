@@ -3,7 +3,8 @@ import Piano from './Piano'
 import NoPiano from './NoPiano'
 import Box from '@mui/material/Box'
 import styled from 'styled-components'
-import { getChordNotes, isSlashChord, guessChordByNotes } from '../util'
+import { isSlashChord, stripNumbersFromNotes, addNumbersToNotes, swapFlatsWithSharps } from '../util'
+import { getChordByName, getChordByNotes } from 'parse-chord'
 import Play from './Play'
 
 const Container = styled(Box)`
@@ -30,12 +31,13 @@ const Chord: React.FC<Props> = ({
   setSearchBy,
   setChord,
 }) => {
-  const notes = getChordNotes(chord)
+  const notes = addNumbersToNotes(getChordByName(chord)?.notes?.map((note: string) => swapFlatsWithSharps(note)) || []);
   const [selectedNotes, setSelectedNotes] = useState<string[]>([])
 
   useEffect(() => {
     if (searchBy === 'notes') {
-      setChord(guessChordByNotes(selectedNotes))
+      const strippedNotes = stripNumbersFromNotes(selectedNotes)
+      setChord(getChordByNotes(strippedNotes).exactMatches?.[0]?.name || '')
     }
   }, [searchBy, setChord, selectedNotes])
 

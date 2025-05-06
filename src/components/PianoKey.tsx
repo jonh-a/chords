@@ -1,4 +1,5 @@
 import React from 'react';
+import { orderNotesByPosition } from '../util';
 
 interface Props {
   note: string
@@ -23,8 +24,8 @@ const PianoKey: React.FC<Props> = ({
     setSearchBy('notes')
     setSelectedNotes((prevState: string[]) =>
       prevState?.includes(note)
-        ? prevState?.filter((n: string) => n !== note)
-        : [...prevState, note])
+        ? orderNotesByPosition(prevState?.filter((n: string) => n !== note))
+        : orderNotesByPosition([...prevState, note]))
   }
 
   const className = searchBy === 'name'

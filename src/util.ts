@@ -4,6 +4,34 @@ export const notes = [
   'A3', 'A#3', 'B3', 'C3', 'C#3', 'D3', 'D#3', 'E3', 'F3', 'F#3', 'G3', 'G#3', 'A4',
 ];
 
+export const stripNumbersFromNotes = (notes: string[]): string[] => {
+  return notes.map((note: string) => note.replace(/[0-9]/g, ''))
+}
+
+export const addNumbersToNotes = (rawNotes: string[]): string[] => {
+  const baseNotes = notes.map(n => n.replace(/[0-9]/g, ''));
+
+  let currentIndex = 0;
+  const result: string[] = [];
+
+  for (let note of rawNotes) {
+    while (currentIndex < notes.length) {
+      if (baseNotes[currentIndex] === note) {
+        result.push(notes[currentIndex]);
+        currentIndex++;
+        break;
+      }
+      currentIndex++;
+    }
+  }
+
+  return result;
+}
+
+export const orderNotesByPosition = (unsortedNotes: string[]): string[] => {
+  return unsortedNotes.sort((a: string, b: string) => notes.indexOf(a) > notes.indexOf(b) ? 1 : -1)
+}
+
 export const chordStructures: { [index: string]: number[] } = {
   // triads
   'maj': [0, 4, 7],
@@ -65,7 +93,7 @@ export const chordStructures: { [index: string]: number[] } = {
   'min13': [0, 4, 7, 11, 14, 17, 21],
 };
 
-const swapFlatsWithSharps = (str: string) => {
+export const swapFlatsWithSharps = (str: string) => {
   if (str?.startsWith("Bb")) return str.replace('Bb', 'A#');
   if (str?.startsWith("Db")) return str.replace('Db', 'C#');
   if (str?.startsWith("Eb")) return str.replace('Eb', 'D#');
@@ -74,88 +102,7 @@ const swapFlatsWithSharps = (str: string) => {
   return str
 }
 
-export const getChordNotes = (chordName: string): string[] => {
-  chordName = chordName?.trim();
-  let bassNote = chordName?.endsWith('9') ? '' : chordName?.split('/')?.[1];
-  if (bassNote) chordName = chordName?.split('/')?.[0];
-
-  if (!chordName || chordName === '') return [];
-
-  chordName = swapFlatsWithSharps(chordName)
-  if (bassNote) bassNote = swapFlatsWithSharps(bassNote)
-
-  /* 
-    Split the chord into root note and chord type either at a space 
-    or immediately after the flat/sharp notation.
-    Otherwise just split after first character.
-  */
-  let splitIdx = 0;
-  if (chordName.includes(' ')) splitIdx = chordName.indexOf(' ');
-  if (chordName?.[1] === '#' || chordName?.[1] === 'b') splitIdx = 1;
-
-  const rootNote = chordName?.substring(0, splitIdx + 1)?.trim();
-  const chordType = chordName?.substring(splitIdx + 1)?.trim();
-
-  /* If no chord type found, return */
-  if (!Object.keys(chordStructures).includes(chordType)) return [];
-
-  const rootNoteIdx: number = notes?.indexOf(rootNote);
-  const chordNotes: string[] = [];
-
-  /* 
-    If a bass note is added and the first instance of the bass note
-    is after the first instance of the root note, then shift the chord
-    diagram up 12 half-steps.
-  */
-  let addIdx = 0;
-  if (
-    notes.indexOf(bassNote) > -1
-    && notes.indexOf(bassNote) > rootNoteIdx
-  ) addIdx = 12;
-
-  if (bassNote && notes.indexOf(bassNote) > -1) {
-    chordNotes.push(bassNote);
-  }
-
-  const chordStructure = chordStructures[chordType];
-  chordStructure?.forEach((n: number) => {
-    chordNotes.push(notes[rootNoteIdx + n + addIdx])
-  });
-
-  return chordNotes;
-}
-
 export const isSlashChord = (chord: string): boolean => {
   return (!chord?.endsWith('9') && chord?.includes('/'));
 }
 
-const findKeyWithLongestArray = (obj: { [index: string]: number[] }) => {
-  let longestKey = '';
-
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      if (!longestKey || obj[key].length > obj[longestKey].length) {
-        longestKey = key;
-      }
-    }
-  }
-
-  return longestKey;
-}
-
-export const guessChordByNotes = (selectedNotes: string[]): string => {
-  const rootIdx = notes.findIndex((j: string) => j === selectedNotes?.[0])
-
-  const guesses: { [index: string]: number[] } = {}
-  Object.keys(chordStructures).forEach((structure: string) => {
-    const indexes = selectedNotes
-      ?.map((i: string) => notes.findIndex((j: string) => i === j))
-      ?.filter((i: number) => i > -1)
-      ?.map((i: number) => i - rootIdx);
-    if (chordStructures[structure].every((item: number) => indexes.includes(item))) {
-      guesses[`${selectedNotes?.[0]}${structure}`] = chordStructures[structure]
-    }
-  })
-
-  return findKeyWithLongestArray(guesses) || ''
-}
