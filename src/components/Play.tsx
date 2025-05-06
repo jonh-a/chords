@@ -26,6 +26,7 @@ const Container = styled(Box)`
 const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const piano = new Tone.Sampler({
@@ -64,6 +65,11 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
       baseUrl: "https://tonejs.github.io/audio/salamander/",
       onload: () => {
         setSampler(piano);
+        setError(null);
+      },
+      onerror: (err) => {
+        console.error('Sampler error:', err);
+        setError('Failed to load piano samples');
       }
     }).toDestination();
 
@@ -85,23 +91,35 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
       else {
         const curOctive = Number(note?.slice(-1));
         const newOctive = curOctive + (isSlashChord ? 2 : 2);
-        return `${note?.substring(0, note.length - 1)}${newOctive}`
+        const safeOctave = Math.min(Math.max(newOctive, 0), 8);
+        return `${note?.substring(0, note.length - 1)}${safeOctave}`
       }
     })
   }
 
   const playNote = () => {
-    if (!sampler) return;
+    if (!sampler) {
+      setError('Piano samples not loaded yet');
+      return;
+    }
 
-    const frequencies = increaseNotesOctives(notes);
-    sampler.triggerAttackRelease(frequencies, '2');
-    setPlaying(true);
-    setTimeout(() => setPlaying(false), 2000)
+    try {
+      const frequencies = increaseNotesOctives(notes);
+      sampler.triggerAttackRelease(frequencies, '2');
+      setPlaying(true);
+      setError(null);
+      setTimeout(() => setPlaying(false), 2000)
+    } catch (err) {
+      console.error('Error playing notes:', err);
+      setError('Error playing notes');
+      setPlaying(false);
+    }
   }
 
   return (
     <Container>
       <Button onClick={playNote} disabled={playing || !sampler}>Play</Button>
+      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
     </Container>
   )
 }
