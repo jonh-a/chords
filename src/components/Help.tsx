@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from '@mui/material/Modal'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { chordStructures } from '../util'
+import { getAllChordTypes } from 'parse-chord'
 
 interface Props {
   open: boolean
@@ -51,13 +51,12 @@ const Help: React.FC<Props> = ({
           <br />
 
           {
-            Object.keys(chordStructures)
+            getAllChordTypes()
               ?.filter((i: string) => i.length > 0)
               ?.join(" / ")
           }
         </Typography>
       </Box>
-
     </Modal>
   )
 }
