@@ -117,7 +117,9 @@ const Play: React.FC<Props> = ({ notes, isSlashChord }) => {
   return (
     <Container>
       <Button onClick={playNote} disabled={playing || !sampler}>Play</Button>
-      <p>{error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}</p>
+      <Container>
+        <p>{error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}</p>
+      </Container>
     </Container>
   )
 }
